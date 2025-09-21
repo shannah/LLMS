@@ -19,3 +19,10 @@ captures
 **/assetlinks.json
 **/security-config.xml
 
+# jDeploy files
+jdeploy-bundle/
+*.jdeploy
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+node_modules/

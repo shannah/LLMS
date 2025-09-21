@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    // alias(libs.plugins.androidLibrary)
     //alias(libs.plugins.kotlinx.rpc)
     alias(libs.plugins.serialization)
 }
@@ -26,12 +26,14 @@ kotlin {
         }
     }
 
+    /*
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+    */
 
     iosX64()
     iosArm64()
@@ -51,6 +53,7 @@ kotlin {
     }
 }
 
+/*
 android {
     namespace = "org.yassineabou.llms.shared"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
@@ -62,3 +65,4 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
 }
+*/

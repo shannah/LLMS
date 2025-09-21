@@ -11,7 +11,7 @@ androidx-lifecycle = "2.9.4"
 
 
 # Android
-agp = "8.13.0"
+agp = "8.2.2"
 android-compileSdk = "36"
 android-minSdk = "28"
 #noinspection EditedTargetSdkVersion
@@ -69,6 +69,9 @@ kodeinDi = "7.26.1"
 
 # Rpc
 kotlinx-rpc = "0.9.1"
+
+# Gradle
+shadow = "8.1.1"
 
 
 
@@ -195,3 +198,6 @@ sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 
 # Kotlinx-rpc
 kotlinx-rpc = { id = "org.jetbrains.kotlinx.rpc.plugin", version.ref = "kotlinx-rpc" }
+
+# Gradle
+shadowPlugin = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
