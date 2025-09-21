@@ -5,12 +5,14 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
+    // alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.serialization)
     alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.shadowPlugin) // Add shadow plugin for cross-platform JAR
     //alias(libs.plugins.kotlinx.rpc)
+    application
 }
 
 kotlin {
@@ -36,6 +38,7 @@ kotlin {
         binaries.executable()
     }
 
+    /*
     androidTarget {
 
         compilerOptions {
@@ -43,6 +46,7 @@ kotlin {
         }
 
     }
+    */
 
     jvm("desktop")
 
@@ -68,6 +72,7 @@ kotlin {
             implementation(devNpm("copy-webpack-plugin", libs.versions.webPackPlugin.get()))
         }
 
+        /*
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -80,6 +85,7 @@ kotlin {
             implementation(libs.android.credentials.play.services.auth)
 
         }
+        */
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -141,7 +147,15 @@ kotlin {
 
         }
         desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
+            // Include all desktop platforms for cross-platform compatibility
+            implementation(compose.desktop.linux_x64)
+            implementation(compose.desktop.linux_arm64)
+            implementation(compose.desktop.macos_x64)
+            implementation(compose.desktop.macos_arm64)
+            implementation(compose.desktop.windows_x64)
+            // Note: Windows ARM64 not yet supported in Compose Multiplatform 1.9.0
+            // implementation(compose.desktop.windows_arm64)
+            
             implementation(libs.ktor.client.cio)
             implementation(libs.sqldelight.sqlite.driver)
             implementation(libs.multiplatform.paths)
@@ -163,6 +177,7 @@ sqldelight {
     }
 }
 
+/*
 android {
     namespace = "org.yassineabou.llms"
     compileSdk = 36
@@ -209,6 +224,18 @@ android {
 }
 dependencies {
     implementation(libs.androidx.foundation.layout.android)
+}
+*/
+
+application {
+    mainClass.set("org.yassineabou.llms.MainKt")
+}
+
+tasks.register("buildExecutableJar") {
+    dependsOn("shadowJar")
+    doLast {
+        println("Built executable JAR: composeApp/build/libs/composeApp-1.0.0-all.jar")
+    }
 }
 
 compose.desktop {
